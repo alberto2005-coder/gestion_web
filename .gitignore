@@ -1,0 +1,39 @@
+# Dependencias de Node.js (se descargan con npm install)
+node_modules/
+jspm_packages/
+
+# Archivos de variables de entorno y credenciales
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs y registros de errores
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Archivos de construcción / compilados (Build outputs)
+dist/
+build/
+out/
+
+# Caché y archivos temporales del editor/sistema operativo
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Archivos de cobertura de pruebas
+coverage/
+.nyc_output/
