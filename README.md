@@ -47,3 +47,62 @@ npm start
 ```
 
 Luego abre en tu navegador: `http://localhost:3000`
+
+
+
+# IndexPulse — SERP Studio & SEO Indexation Analyzer
+
+A professional web application designed to check any website's indexation status, preview exactly how it appears on Google and Bing (SERP Snippet), and audit its SEO health in real time.
+
+---
+
+## 🚀 Key Features
+
+1. **Search Engine Indexation Diagnosis**:
+* **Google, Bing, DuckDuckGo, Yahoo!, and Yandex**: Checks visibility across search engines when direct queries are possible. Google and Yandex are marked as indexed or undetected only when verifiable results are returned; if automated queries are blocked by the search engine, a "verification unavailable" status is displayed. Crawlability alone does not guarantee indexation.
+* **Technical Directives**: Analysis of `robots.txt` (Disallow rules), `<meta name="robots">` (`noindex`, `nofollow`), HTTP `X-Robots-Tag` header, canonical tags (`<link rel="canonical">`), and XML Sitemap detection.
+
+
+2. **SERP Simulator (Search Result Preview)**:
+* **Google Desktop**: Photorealistic rendering featuring favicon, breadcrumbs, clickable blue title with pixel-length gauge (~580px max), and description snippet.
+* **Google Mobile**: Card-style simulation optimized for smartphone displays.
+* **Microsoft Bing**: Native Bing SERP layout preview.
+* **Social Media Cards**: Open Graph (Facebook, WhatsApp, LinkedIn) and Twitter/X Card previews.
+* **Live Interactive Editor**: Real-time editing of titles and meta descriptions to test character/pixel constraints before truncation (`...`).
+
+
+3. **Comprehensive On-Page SEO Audit**:
+* **SEO Health Score (0 to 100)** with an animated circular progress indicator and classification tiers (Excellent, Good, Needs Improvement, Critical).
+* Word count, text-to-HTML ratio, and Time to First Byte (TTFB) server response monitoring.
+* Heading hierarchy audit (`<h1>` through `<h4>`), detecting missing or duplicate H1 tags.
+* Image audit: Image count, missing `alt` attributes check, and sample image gallery.
+* Keyword density cloud and frequency breakdown table.
+* Internal vs. external link analysis and `nofollow` attribute detection.
+
+
+4. **Actionable Recommendations & Checklist**:
+* Categorization by priority: 🔴 Critical Issues, 🟡 Warnings, and 🟢 Passed Audits.
+* Dynamic filtering controls and a **Print / Export PDF Report** button.
+
+
+
+---
+
+## 💻 How to Run the Application
+
+The server is running in the background at:
+👉 **[http://localhost:3000](http://localhost:3000)**
+
+To start it manually at any time:
+
+```bash
+# Install dependencies (if not installed yet)
+npm install
+
+# Start the server
+npm start
+
+```
+
+Then open your browser and navigate to: `http://localhost:3000`
+
