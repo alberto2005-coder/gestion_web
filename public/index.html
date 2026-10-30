@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexPulse — Verificador de Indexación, SERP Preview y Auditoría SEO</title>
+  <meta name="description" content="Comprueba si una web está indexada en Google y Bing, previsualiza cómo aparece en los resultados de búsqueda y audita su salud SEO en tiempo real.">
+  <link rel="icon" type="image/png" href="img/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Background Glow & Grid -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <polyline points="11 8 11 11 14 11"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">IndexPulse<span class="brand-accent">.seo</span></span>
+          <span class="brand-tag">Diagnóstico SERP & Indexación</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-label">Motor en Línea</span>
+        </div>
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Cambiar tema">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Search Section -->
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Auditoría en tiempo real para Google, Bing & DuckDuckGo</span>
+      </div>
+      <h1 class="hero-title">¿Está indexada tu página? <br><span class="gradient-text">Descubre cómo sale en buscadores y su salud SEO</span></h1>
+      <p class="hero-subtitle">Introduce cualquier enlace para comprobar si los buscadores pueden indexarla, simular exactamente su snippet en Google y obtener una auditoría SEO profunda.</p>
+
+      <!-- Search Input Container -->
+      <form id="searchForm" class="search-box">
+        <div class="search-input-wrapper">
+          <div class="search-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <input 
+            type="text" 
+            id="urlInput" 
+            class="url-input" 
+            placeholder="ej. https://elpais.com o midominio.com/mi-articulo" 
+            autocomplete="off"
+            spellcheck="false"
+            required
+          />
+          <button type="button" id="pasteBtn" class="paste-btn" title="Pegar del portapapeles">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            <span>Pegar</span>
+          </button>
+        </div>
+        <button type="submit" id="analyzeBtn" class="analyze-btn">
+          <span class="btn-text">Analizar Web</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <div class="spinner" style="display: none;"></div>
+        </button>
+      </form>
+
+      <!-- Quick Demos -->
+      <div class="quick-examples">
+        <span class="examples-label">Probar al instante:</span>
+        <button type="button" class="chip-example" data-url="https://es.wikipedia.org/wiki/Inteligencia_artificial">Wikipedia (IA)</button>
+        <button type="button" class="chip-example" data-url="https://github.com">GitHub</button>
+        <button type="button" class="chip-example" data-url="https://elpais.com">El País</button>
+        <button type="button" class="chip-example" data-url="https://news.ycombinator.com">Hacker News</button>
+      </div>
+    </section>
+
+    <!-- Error Banner -->
+    <div id="errorBanner" class="error-banner" style="display: none;">
+      <div class="error-icon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </div>
+      <div class="error-message" id="errorMessage">Error al conectar con la web.</div>
+      <button type="button" class="close-error" onclick="document.getElementById('errorBanner').style.display='none'">&times;</button>
+    </div>
+
+    <!-- Results Section (Initially Hidden) -->
+    <section id="resultsSection" class="results-section" style="display: none;">
+      
+      <!-- Top Summary Card -->
+      <div class="summary-card">
+        <div class="summary-url-info">
+          <div class="domain-badge-row">
+            <span id="resDomainBadge" class="domain-badge">dominio.com</span>
+            <span id="resProtocolBadge" class="protocol-badge">HTTPS Seguro</span>
+            <span id="resStatusBadge" class="status-code-badge">HTTP 200 OK</span>
+            <span id="resSpeedBadge" class="speed-badge">⚡ 180ms</span>
+          </div>
+          <div class="analyzed-url-text" id="resTargetUrl">https://ejemplo.com</div>
+          <div class="indexation-verdict-box" id="indexVerdictBox">
+            <div class="verdict-icon-bubble" id="verdictIcon">🟢</div>
+            <div>
+              <h3 class="verdict-title" id="verdictTitle">Página Apta para Indexación</h3>
+              <p class="verdict-desc" id="verdictDesc">No tiene bloqueos de "noindex" ni está restringida en robots.txt. Los buscadores pueden rastrearla e incluirla en sus resultados.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global SEO Score Widget -->
+        <div class="seo-score-widget">
+          <div class="score-circle-container">
+            <svg class="score-svg" viewBox="0 0 120 120">
+              <circle class="score-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="score-progress" id="scoreCircle" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="score-center-text">
+              <span id="scoreValue" class="score-number">92</span>
+              <span class="score-max">/100</span>
+            </div>
+          </div>
+          <div class="score-label-group">
+            <div class="score-badge" id="scoreBadge">Excelente</div>
+            <span class="score-desc">Puntuación de Salud SEO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="results-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-indexation">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Indexación en Buscadores</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-serp">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <span>Cómo sale en Buscadores (SERP)</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-seo">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
+          <span>Auditoría SEO On-Page</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-checklist">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>Recomendaciones & Checklist</span>
+          <span class="issues-count-pill" id="issuesPill">0</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Indexation in Search Engines -->
+      <div id="tab-indexation" class="tab-pane active">
+        <!-- Automated Real-Time Scan Banner -->
+        <div id="automatedScanBanner" class="automated-scan-banner">
+          <div class="scan-banner-left">
+            <span class="scan-radar-icon">📡</span>
+            <div>
+              <h3 id="scanBannerTitle" class="scan-banner-title">Escaneo Automático de Indexación Realizado</h3>
+              <p id="scanBannerSubtitle" class="scan-banner-sub">Comprobando presencia directa en los índices de búsqueda...</p>
+            </div>
+          </div>
+          <div class="scan-banner-badge" id="scanBannerBadge">
+            <span id="scanCountPill">0 de 3 confirmados</span>
+          </div>
+        </div>
+
+        <h2 class="section-title">Comprobación Directa por Motor de Búsqueda</h2>
+        <p class="section-subtitle">Se comprueban los resultados disponibles. Google y Yandex pueden bloquear consultas automáticas; usa el enlace de cada motor para verificar la URL directamente.</p>
+        
+        <div class="engines-grid" id="enginesGrid">
+          <!-- Injected via app.js -->
+        </div>
+
+        <!-- Technical Indexability Directives Table -->
+        <h2 class="section-title" style="margin-top: 36px;">Directivas de Indexabilidad Detectadas</h2>
+        <div class="tech-table-container">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Factor / Parámetro</th>
+                <th>Valor Detectado en la Web</th>
+                <th>Estado para Buscadores</th>
+                <th>Explicación</th>
+              </tr>
+            </thead>
+            <tbody id="directivesTableBody">
+              <!-- Injected via app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Robots.txt Preview Box -->
+        <div class="card-box" style="margin-top: 24px;">
+          <div class="card-header-flex">
+            <div class="card-title-group">
+              <span class="card-icon">🤖</span>
+              <h3>Archivo robots.txt</h3>
+            </div>
+            <a id="robotsTxtLink" href="#" target="_blank" class="external-link-btn">Abrir robots.txt ↗</a>
+          </div>
+          <div id="robotsTxtContainer" class="code-box">
+            <pre id="robotsTxtCode">Cargando directivas...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: SERP Preview (How it appears in search engines) -->
+      <div id="tab-serp" class="tab-pane">
+        <div class="serp-layout">
+          <!-- Left: SERP Previews -->
+          <div class="serp-preview-column">
+            <div class="serp-view-selector">
+              <button type="button" class="serp-type-btn active" data-serp="google-desktop">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                Google Escritorio
+              </button>
+              <button type="button" class="serp-type-btn" data-serp="google-mobile">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                Google Móvil
+              </button>
+              <button type="button" class="serp-type-btn" data-serp="bing">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M5 3v18l6 3 8-5-3-2-5 3V3H5z"/></svg>
+                Bing
+              </button>
+              <button type="button" class="serp-type-btn" data-serp="social">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                Redes Sociales (OpenGraph)
+              </button>
+            </div>
+
+            <!-- 1. Google Desktop Preview Container -->
+            <div id="serp-google-desktop" class="serp-card-container">
+              <div class="serp-frame-header">
+                <span class="engine-badge google">Google SERP Desktop Preview</span>
+                <span class="pixel-counter" id="desktopPixelCounter">540px / 580px</span>
+              </div>
+              
+              <div class="google-desktop-snippet">
+                <!-- Source URL / Breadcrumb -->
+                <div class="g-source-row">
+                  <div class="g-favicon-wrapper">
+                    <img id="gFaviconImg" src="" alt="Favicon" class="g-favicon" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%239aa0a6%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>'">
+                  </div>
+                  <div class="g-source-texts">
+                    <span id="gSiteName" class="g-sitename">Sitio Web</span>
+                    <span id="gBreadcrumb" class="g-breadcrumb">https://ejemplo.com › seccion › pagina</span>
+                  </div>
+                  <button type="button" class="g-dots-btn">⋮</button>
+                </div>
+
+                <!-- Clickable Title -->
+                <h3 class="g-title" id="gTitleDisplay">Título de la Página para Posicionamiento SEO en Google</h3>
+
+                <!-- Snippet Text -->
+                <div class="g-snippet" id="gSnippetDisplay">
+                  Aquí se muestra el texto descriptivo extraído de la etiqueta meta description de tu página o el snippet que Google seleccionará dinámicamente...
+                </div>
+
+                <!-- Rich Snippet Badges Simulation -->
+                <div class="g-rich-elements" id="gRichElements" style="display: none;">
+                  <span class="g-rich-badge">★ 4.9 (1.2k)</span>
+                  <span class="g-rich-badge">En stock</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Google Mobile Preview Container -->
+            <div id="serp-google-mobile" class="serp-card-container" style="display: none;">
+              <div class="serp-frame-header">
+                <span class="engine-badge google">Google SERP Mobile Preview</span>
+                <span class="pixel-counter">Pantalla Táctil Smartphone</span>
+              </div>
+              <div class="mobile-phone-frame">
+                <div class="google-mobile-card">
+                  <div class="g-mobile-top">
+                    <div class="g-mobile-icon-box">
+                      <img id="gMobileFavicon" src="" alt="Icon" class="g-favicon">
+                    </div>
+                    <div class="g-mobile-domain-group">
+                      <span id="gMobileSiteName" class="g-sitename">ejemplo.com</span>
+                      <span id="gMobileUrl" class="g-mobile-url">https://ejemplo.com</span>
+                    </div>
+                    <span class="g-mobile-dots">⋮</span>
+                  </div>
+                  <h4 class="g-mobile-title" id="gMobileTitle">Título Optimizado para Móvil</h4>
+                  <p class="g-mobile-snippet" id="gMobileSnippet">Descripción que leerán los usuarios desde dispositivos móviles en Google.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Bing Preview Container -->
+            <div id="serp-bing" class="serp-card-container" style="display: none;">
+              <div class="serp-frame-header">
+                <span class="engine-badge bing">Bing Search Preview</span>
+              </div>
+              <div class="bing-snippet">
+                <div class="bing-url-row">
+                  <span id="bingUrl" class="bing-url">https://ejemplo.com</span>
+                </div>
+                <h3 id="bingTitle" class="bing-title">Título en el buscador Bing</h3>
+                <p id="bingSnippet" class="bing-snippet-text">Extracto del resultado en Microsoft Bing...</p>
+              </div>
+            </div>
+
+            <!-- 4. Social OpenGraph Preview Container -->
+            <div id="serp-social" class="serp-card-container" style="display: none;">
+              <div class="serp-frame-header">
+                <span class="engine-badge social">Previsualización Social (Facebook / WhatsApp / LinkedIn / X)</span>
+              </div>
+              <div class="social-preview-card">
+                <div class="social-image-box">
+                  <img id="socialImagePreview" src="" alt="Vista previa OpenGraph">
+                </div>
+                <div class="social-card-body">
+                  <div class="social-domain" id="socialDomain">EJEMPLO.COM</div>
+                  <h4 class="social-title" id="socialTitle">Título Social Compartido</h4>
+                  <p class="social-desc" id="socialDesc">Descripción para previsualizaciones sociales cuando alguien comparte el enlace.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Interactive SERP Editor / Length Inspector -->
+          <div class="serp-editor-column">
+            <div class="editor-panel">
+              <div class="editor-header">
+                <div class="editor-title-group">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                  <h3>Simulador / Editor de Snippet</h3>
+                </div>
+                <span class="badge-hint">Modifica en vivo</span>
+              </div>
+              <p class="editor-desc">Comprueba cómo cambiarían los resultados de búsqueda si optimizas los textos aquí:</p>
+
+              <!-- Title Field -->
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="editTitle">Etiqueta &lt;title&gt;</label>
+                  <span class="count-indicator" id="titleCharIndicator">0 / 60 caracteres</span>
+                </div>
+                <input type="text" id="editTitle" class="form-control" />
+                <div class="progress-bar-track">
+                  <div id="titleProgressBar" class="progress-bar-fill"></div>
+                </div>
+                <small class="field-feedback" id="titleFeedback">Ideal entre 45 y 60 caracteres (máx. 580px).</small>
+              </div>
+
+              <!-- Meta Description Field -->
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="editDesc">Meta Description</label>
+                  <span class="count-indicator" id="descCharIndicator">0 / 160 caracteres</span>
+                </div>
+                <textarea id="editDesc" rows="3" class="form-control"></textarea>
+                <div class="progress-bar-track">
+                  <div id="descProgressBar" class="progress-bar-fill"></div>
+                </div>
+                <small class="field-feedback" id="descFeedback">Ideal entre 120 y 160 caracteres.</small>
+              </div>
+
+              <!-- Reset to original -->
+              <button type="button" id="resetEditorBtn" class="secondary-btn">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                Restaurar valores originales
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Detailed On-Page SEO Audit -->
+      <div id="tab-seo" class="tab-pane">
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon">📝</div>
+            <div class="metric-data">
+              <span class="metric-val" id="seoWordsCount">0</span>
+              <span class="metric-name">Palabras en Contenido</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">📑</div>
+            <div class="metric-data">
+              <span class="metric-val" id="seoRatio">0%</span>
+              <span class="metric-name">Ratio Texto / Código HTML</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🖼️</div>
+            <div class="metric-data">
+              <span class="metric-val" id="seoImagesCount">0</span>
+              <span class="metric-name">Imágenes Totales (<span id="seoImagesNoAlt" class="text-danger">0 sin ALT</span>)</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🔗</div>
+            <div class="metric-data">
+              <span class="metric-val" id="seoLinksCount">0</span>
+              <span class="metric-name">Enlaces (<span id="seoInternalLinks">0</span> int / <span id="seoExternalLinks">0</span> ext)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-columns-grid" style="margin-top: 24px;">
+          <!-- Headings Hierarchy Breakdown -->
+          <div class="card-box">
+            <div class="card-title-group">
+              <span class="card-icon">🔤</span>
+              <h3>Jerarquía de Encabezados (H1 - H4)</h3>
+            </div>
+            <div class="headings-breakdown" id="headingsBreakdown">
+              <!-- Injected via app.js -->
+            </div>
+          </div>
+
+          <!-- Top Keywords Density -->
+          <div class="card-box">
+            <div class="card-title-group">
+              <span class="card-icon">📈</span>
+              <h3>Palabras Clave más Relevantes</h3>
+            </div>
+            <p class="card-sub">Frecuencia y densidad en el cuerpo del texto:</p>
+            <div class="keywords-table-wrap">
+              <table class="tech-table">
+                <thead>
+                  <tr>
+                    <th>Palabra Clave</th>
+                    <th>Repeticiones</th>
+                    <th>Densidad (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="keywordsTableBody">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Images Audit Preview -->
+        <div class="card-box" style="margin-top: 24px;">
+          <div class="card-title-group">
+            <span class="card-icon">📷</span>
+            <h3>Auditoría de Imágenes y Accesibilidad ALT</h3>
+          </div>
+          <div class="images-preview-grid" id="imagesPreviewGrid">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Checklist & Recommendations -->
+      <div id="tab-checklist" class="tab-pane">
+        <div class="checklist-header-bar">
+          <div class="filter-pills">
+            <button type="button" class="filter-pill active" data-filter="all">Todos (<span id="countAll">0</span>)</button>
+            <button type="button" class="filter-pill" data-filter="critical">Críticos 🔴 (<span id="countCritical">0</span>)</button>
+            <button type="button" class="filter-pill" data-filter="warning">Advertencias 🟡 (<span id="countWarning">0</span>)</button>
+            <button type="button" class="filter-pill" data-filter="passed">Aprobados 🟢 (<span id="countPassed">0</span>)</button>
+          </div>
+          <button type="button" id="printReportBtn" class="action-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Imprimir / Exportar Informe</span>
+          </button>
+        </div>
+
+        <div class="checklist-items-container" id="checklistContainer">
+          <!-- Injected via app.js -->
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>IndexPulse SERP Studio &copy; 2026 — Herramienta de Diagnóstico de Indexación y Optimización SEO para Buscadores.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
