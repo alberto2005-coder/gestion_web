@@ -1,10 +1,20 @@
-# IndexPulse — SERP Studio, SEO, Web Speed & Security Suite
+<div align="center">
+  <img src="public/img/icon.png" alt="IndexPulse Logo" width="128" height="128" />
+  <h1>IndexPulse — SERP Studio & SEO Suite</h1>
+  <p><strong>Diagnóstico de Indexación, Simulador SERP, Core Web Vitals y Auditoría de Seguridad Web</strong></p>
 
-[![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+  [![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+  [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
-> **Languages / Idiomas**: [Español](#-versión-en-español) | [English](#-english-version)
+  <br>
+
+  <p>
+    <strong>Languages / Idiomas:</strong> 
+    <a href="#-versión-en-español">Español</a> • 
+    <a href="#-english-version">English</a>
+  </p>
+</div>
 
 ---
 
