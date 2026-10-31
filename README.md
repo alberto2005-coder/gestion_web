@@ -1,65 +1,186 @@
 # IndexPulse — SERP Studio, SEO, Web Speed & Security Suite
 
-Aplicación web profesional para comprobar el estado de indexación de cualquier página web, previsualizar exactamente cómo aparece en Google y Bing (SERP Snippet & Rich Snippets), auditar la seguridad web y cabeceras HTTP, diagnosticar SEO internacional (`hreflang`), medir la velocidad de carga (Core Web Vitals) y auditar la salud SEO en tiempo real.
+[![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+
+> **Languages / Idiomas**: [Español](#-versión-en-español) | [English](#-english-version)
+
+---
+
+# 🇪🇸 Versión en Español
+
+**IndexPulse** es una suite profesional de auditoría SEO, diagnóstico de indexación en buscadores, simulación SERP con Rich Snippets, análisis de velocidad Web (Core Web Vitals) y evaluación de seguridad web en tiempo real.
 
 ---
 
 ## 🚀 Características Principales
 
-1. **Diagnóstico de Indexación en Buscadores**:
-   - **Google, Bing, DuckDuckGo, Yahoo! y Yandex**: Comprueba presencia en los resultados cuando puede consultarse directamente. Google y Yandex solo se marcan como indexados o no detectados cuando hay resultados verificables; si el buscador bloquea la consulta automática, se indica que no se pudieron verificar.
-   - **Directivas Técnicas**: Análisis de `robots.txt` (reglas Disallow), `<meta name="robots">` (`noindex`, `nofollow`), cabecera HTTP `X-Robots-Tag`, etiqueta `<link rel="canonical">` y detección de Sitemap XML.
+### 1. Diagnóstico de Indexación en Buscadores
+* **Google, Bing, DuckDuckGo, Yahoo! y Yandex**: Comprueba la presencia de cualquier URL en los índices de búsqueda.
+* **Directivas Técnicas**: Inspección exhaustiva de `robots.txt` (reglas Disallow/Allow), `<meta name="robots">` (`noindex`, `nofollow`), cabecera HTTP `X-Robots-Tag`, etiqueta `<link rel="canonical">` y detección de Mapa del Sitio (Sitemap XML).
 
-2. **Simulador SERP (Cómo sale en buscadores)**:
-   - **Google Escritorio (Desktop)**: Renderizado fotorrealista con favicon, migas de pan (breadcrumbs), título en azul con medidor de longitud de píxeles (~580px) y fragmento de descripción.
-   - **Google Móvil (Mobile)**: Simulación de tarjeta para smartphones.
-   - **Microsoft Bing**: Previsualización con el formato nativo de Bing.
-   - **Redes Sociales**: Tarjeta Open Graph (Facebook, WhatsApp, LinkedIn) y Twitter Card.
-   - **Editor Interactivo en Vivo**: Permite editar el título y la descripción al vuelo para probar cómo encajaría en Google sin ser truncado con puntos suspensivos.
+### 2. Simulador SERP en Vivo & Redes Sociales
+* **Google Escritorio (Desktop)**: Renderizado fotorrealista con favicon, migas de pan (breadcrumbs), título azul interactivo con medidor de píxeles (~580px límite) y descripción.
+* **Google Móvil (Mobile)**: Simulación de tarjeta nativa para pantallas de smartphones.
+* **Microsoft Bing**: Previsualización con el formato original del buscador Bing.
+* **Redes Sociales (Open Graph & Twitter Cards)**: Vista previa para compartir en WhatsApp, Facebook, LinkedIn y X (Twitter).
+* **Editor Interactivo en Tiempo Real**: Modifica el `<title>` y `<meta name="description">` al vuelo para calcular longitud y evitar truncamientos (`...`).
 
-3. **Velocidad Web & Core Web Vitals (Google PageSpeed & Search Speed)**:
-   - **Puntuación de Rendimiento (0-100)**: Medidor visual calibrado con los estándares de Google Lighthouse.
-   - **Métricas Core Web Vitals**: LCP (Largest Contentful Paint), FCP (First Contentful Paint), CLS (Cumulative Layout Shift), TBT (Total Blocking Time), TTFB (Time to First Byte) y Speed Index con indicadores de estado (Bueno, Mejorable, Lento).
-   - **Velocidad de Rastreo para Googlebot / Bingbot**: Evaluación del impacto en el Crawl Budget y latencia de respuesta directa del servidor.
-   - **Inventario de Recursos**: Análisis de peso HTML, compresión Gzip/Brotli, cantidad de hojas de estilo (CSS), scripts (JS) y enlaces directos a Google PageSpeed Insights.
+### 3. Velocidad Web & Core Web Vitals (Google PageSpeed)
+* **Puntuación de Rendimiento (0-100)**: Calibrado con los estándares de Google Lighthouse.
+* **Métricas Core Web Vitals**:
+  * **LCP** (*Largest Contentful Paint*): Velocidad de renderizado del elemento visual principal.
+  * **FCP** (*First Contentful Paint*): Aparición del primer contenido visual.
+  * **CLS** (*Cumulative Layout Shift*): Estabilidad visual sin desplazamientos bruscos.
+  * **TBT** (*Total Blocking Time*): Medición de bloqueo del hilo principal por scripts.
+  * **TTFB** (*Time to First Byte*): Tiempo de respuesta del servidor.
+  * **Speed Index**: Tasa de visualización del contenido.
+* **Velocidad de Rastreo (Crawl Speed)**: Evaluación de latencia para Googlebot y Bingbot para preservar el Crawl Budget.
+* **Inventario de Recursos**: Análisis de peso HTML, compresión Gzip/Brotli, cantidad de CSS y scripts externos con enlaces directos a Google PageSpeed Insights oficial.
 
-4. **Auditoría de Seguridad & Cabeceras HTTP**:
-   - **Puntuación de Seguridad (0 a 100)** y medidor de confianza.
-   - **Cabeceras de Defensa**: Análisis de HTTPS/TLS, HSTS (*Strict-Transport-Security*), CSP (*Content-Security-Policy*), *X-Frame-Options* (contra Clickjacking), *X-Content-Type-Options* y *Referrer-Policy*.
-   - **Detección de Contenido Mixto (Mixed Content)**: Alerta si una web HTTPS carga imágenes, scripts o estilos en HTTP plano no seguro.
+### 4. Auditoría de Seguridad & Cabeceras HTTP
+* **Puntuación de Seguridad (0-100)** y diagnóstico de defensas activas del servidor.
+* **Cabeceras HTTP Inspeccionadas**:
+  * `Strict-Transport-Security (HSTS)`: Forzado de conexiones cifradas.
+  * `Content-Security-Policy (CSP)`: Mitigación contra inyecciones XSS.
+  * `X-Frame-Options`: Protección activa contra Clickjacking.
+  * `X-Content-Type-Options: nosniff`: Prevención de MIME Sniffing.
+  * `Referrer-Policy` y `Permissions-Policy`.
+* **Detección de Contenido Mixto (Mixed Content)**: Detección de imágenes, scripts o estilos HTTP no cifrados en páginas HTTPS.
 
-5. **Datos Estructurados Schema.org & Rich Snippets**:
-   - **Simulación de Resultados Enriquecidos**: Visualización de estrellitas de valoración (⭐⭐⭐⭐⭐), precios de producto, disponibilidad de stock y acordeones de preguntas frecuentes (FAQ).
-   - **Inspector de Esquemas JSON-LD**: Desglose de tipos declarados (`@type`: Article, Product, Organization, FAQPage, etc.).
+### 5. Datos Estructurados Schema.org & Rich Snippets
+* **Simulador de Resultados Enriquecidos**: Visualización en Google de estrellas de valoración (⭐⭐⭐⭐⭐ `AggregateRating`), precios y stock de productos (`Offers`), y preguntas frecuentes (`FAQPage`).
+* **Inspector JSON-LD**: Desglose de todos los esquemas semánticos detectados en el código fuente.
 
-6. **SEO Internacional & Multilingüe (`hreflang`)**:
-   - Detección y validación de etiquetas `<link rel="alternate" hreflang="...">`.
-   - Comprobación de autorreferencia de idioma y código de idioma ISO del elemento `<html lang>`.
+### 6. SEO Internacional & Geolocalización (`hreflang`)
+* Detección y validación de etiquetas `<link rel="alternate" hreflang="...">`.
+* Validación de autorreferencia de idioma y comprobación del atributo `<html lang>`.
 
-7. **Auditoría SEO On-Page Exhaustiva**:
-   - **Puntuación de Salud SEO (0 a 100)** con indicador circular animado y clasificación (Excelente, Bueno, Requiere Mejoras, Crítico).
-   - Conteo de palabras, ratio texto/código HTML y tiempo de respuesta del servidor (TTFB).
-   - Jerarquía de encabezados `<h1>` a `<h4>`, auditoría de imágenes sin `alt` y densidad de palabras clave.
+### 7. Auditoría SEO On-Page Exhaustiva
+* **Puntuación Global de Salud SEO (0-100)** con indicador circular animado.
+* Conteo de palabras, ratio texto/código HTML.
+* Jerarquía de encabezados `<h1>` a `<h4>` (detección de H1 faltante o duplicado).
+* Detección de imágenes sin atributo `alt` obligatorio y galería visual de muestra.
+* Análisis y tabla de densidad de palabras clave principales.
 
-8. **Recomendaciones y Checklist Accionable**:
-   - Clasificación por severidad: 🔴 Crítico, 🟡 Advertencias y 🟢 Aprobados.
-   - Filtros dinámicos y botón de **Imprimir / Exportar Informe a PDF**.
+### 8. Recomendaciones, Checklist & Exportación a PDF
+* Integración unificada de todos los fallos (Indexación, SEO, Seguridad, Velocidad y Schema).
+* Filtros por severidad: 🔴 Críticos, 🟡 Advertencias y 🟢 Aprobados.
+* **Botón de Imprimir / Exportar Informe**: Genera un informe PDF completo que imprime todas las pestañas y secciones de forma consecutiva y profesional.
 
 ---
 
-## 💻 Cómo Ejecutar la Aplicación
+## 💻 Instalación y Uso
 
-El servidor se ejecuta en:
-👉 **[http://localhost:3000](http://localhost:3000)**
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/alberto2005-coder/gestion_web.git
+   cd gestion_web
+   ```
 
-Para iniciarlo manualmente en cualquier momento:
+2. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
 
-```bash
-# Instalar dependencias si no lo has hecho
-npm install
+3. **Iniciar el servidor**:
+   ```bash
+   npm start
+   ```
 
-# Iniciar el servidor
-npm start
-```
+4. **Abrir en el navegador**:
+   Visita [http://localhost:3000](http://localhost:3000)
 
-Luego abre en tu navegador: `http://localhost:3000`
+---
+---
+
+# 🇬🇧 English Version
+
+**IndexPulse** is an all-in-one professional SEO audit suite, search engine indexation checker, SERP & Rich Snippet simulator, Web Speed analyzer (Core Web Vitals), and HTTP security inspector in real time.
+
+---
+
+## 🚀 Key Features
+
+### 1. Search Engine Indexation Diagnosis
+* **Google, Bing, DuckDuckGo, Yahoo!, and Yandex**: Verifies whether any webpage is indexed across major search engines.
+* **Technical Directives**: Deep analysis of `robots.txt` (Disallow/Allow rules), `<meta name="robots">` (`noindex`, `nofollow`), HTTP `X-Robots-Tag` header, `<link rel="canonical">` canonical tags, and XML Sitemap detection.
+
+### 2. Live SERP Simulator & Social Media Cards
+* **Google Desktop**: Photorealistic SERP result featuring website favicon, breadcrumbs, clickable blue title with pixel-length gauge (~580px cut-off), and meta description snippet.
+* **Google Mobile**: Native smartphone card simulation.
+* **Microsoft Bing**: Authentic Bing SERP layout rendering.
+* **Social Media Cards (Open Graph & Twitter Cards)**: Previews for WhatsApp, Facebook, LinkedIn, and X (Twitter).
+* **Interactive Live Editor**: Edit `<title>` and `<meta name="description">` in real time to calculate character counts and prevent truncation (`...`).
+
+### 3. Web Speed & Core Web Vitals (Google PageSpeed)
+* **Performance Score (0-100)**: Calibrated against Google Lighthouse scoring standards.
+* **Core Web Vitals Metrics**:
+  * **LCP** (*Largest Contentful Paint*): Measures perceived loading speed of the main content.
+  * **FCP** (*First Contentful Paint*): Time to render the very first DOM element.
+  * **CLS** (*Cumulative Layout Shift*): Quantifies unexpected layout shifts for visual stability.
+  * **TBT** (*Total Blocking Time*): Quantifies main thread execution delays caused by JavaScript.
+  * **TTFB** (*Time to First Byte*): Server responsiveness and initial latency.
+  * **Speed Index**: Content population visual progression.
+* **Search Engine Crawl Speed**: Assesses Googlebot and Bingbot crawl latency to safeguard Crawl Budget.
+* **Resource Inventory**: Inspection of HTML payload size, Gzip/Brotli server compression, external CSS/JS counts, and direct links to official Google PageSpeed Insights.
+
+### 4. HTTP Security & Headers Audit
+* **Security Score (0-100)** and server defense evaluation.
+* **HTTP Headers Inspected**:
+  * `Strict-Transport-Security (HSTS)`: Enforces secure SSL/TLS connections.
+  * `Content-Security-Policy (CSP)`: Guards against XSS and code injection.
+  * `X-Frame-Options`: Defends against Clickjacking attacks.
+  * `X-Content-Type-Options: nosniff`: Prevents MIME-type sniffing.
+  * `Referrer-Policy` & `Permissions-Policy`.
+* **Mixed Content Detection**: Identifies insecure HTTP assets (images, stylesheets, scripts) loaded within HTTPS pages.
+
+### 5. Schema.org Structured Data & Rich Snippets
+* **Rich Snippets Simulator**: Preview how Google renders rating stars (⭐⭐⭐⭐⭐ `AggregateRating`), product prices/stock (`Offers`), and FAQ accordion dropdowns (`FAQPage`).
+* **JSON-LD Schema Inspector**: Lists and validates all semantic `@type` schemas detected on the webpage.
+
+### 6. International SEO & Multilingual Support (`hreflang`)
+* Detection and validation of `<link rel="alternate" hreflang="...">` language/region tags.
+* Verifies self-referencing canonicals and the root `<html lang>` attribute.
+
+### 7. Comprehensive On-Page SEO Audit
+* **Global SEO Health Score (0-100)** with animated circular gauge.
+* Total word count and text-to-HTML ratio computation.
+* Heading structure audit (`<h1>` through `<h4>`), flagging missing or duplicate H1 tags.
+* Image audit identifying missing `alt` attributes with visual preview cards.
+* Keyword density calculation and frequency breakdown table.
+
+### 8. Actionable Checklist & PDF Report Export
+* Aggregates all detected issues (Indexation, SEO, Security, Performance, and Schema) into a single checklist.
+* Priority filtering: 🔴 Critical Issues, 🟡 Warnings, and 🟢 Passed Audits.
+* **Print / Export PDF Report Button**: Generates a unified, clean document rendering all analysis modules sequentially for client reporting.
+
+---
+
+## 💻 Getting Started
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/alberto2005-coder/gestion_web.git
+   cd gestion_web
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the server**:
+   ```bash
+   npm start
+   ```
+
+4. **Open in browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
