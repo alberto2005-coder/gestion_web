@@ -249,7 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. On-Page SEO Tab
     renderSeoTab(data);
 
-    // 8. Recommendations Checklist
+    // 8. Speed & Core Web Vitals Tab
+    if (data.speed) {
+      renderSpeedTab(data.speed, data.url);
+    }
+
+    // 9. Recommendations Checklist
     renderChecklist(data.audit);
   }
 
@@ -705,6 +710,125 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('printReportBtn').addEventListener('click', () => {
     window.print();
   });
+
+  // Render Speed & Core Web Vitals Tab
+  function renderSpeedTab(speed, targetUrl) {
+    // Score gauge
+    const speedScoreVal = document.getElementById('speedScoreVal');
+    const speedBadgePill = document.getElementById('speedBadgePill');
+    const speedCircle = document.getElementById('speedCircle');
+
+    speedScoreVal.textContent = speed.score;
+    speedBadgePill.textContent = speed.grade;
+    speedBadgePill.style.backgroundColor = speed.color;
+
+    // Circumference for r=42 is 2 * PI * 42 = 263.89
+    const totalCirc = 263.89;
+    const offset = totalCirc - (speed.score / 100) * totalCirc;
+    speedCircle.style.stroke = speed.color;
+    speedCircle.style.strokeDashoffset = offset;
+
+    // Crawl Speed box
+    const crawlRatingTag = document.getElementById('crawlRatingTag');
+    const crawlVerdictText = document.getElementById('crawlVerdictText');
+    const crawlSpeedBox = document.getElementById('crawlSpeedBox');
+
+    crawlRatingTag.textContent = speed.crawlSpeed.rating;
+    crawlRatingTag.style.backgroundColor = speed.crawlSpeed.color;
+    crawlVerdictText.textContent = speed.crawlSpeed.verdict;
+    crawlSpeedBox.style.borderLeftColor = speed.crawlSpeed.color;
+
+    // Timings pills
+    document.getElementById('timeTotalVal').textContent = `${speed.timings.totalTimeMs}ms`;
+    document.getElementById('timeTtfbVal').textContent = `${speed.timings.ttfbMs}ms`;
+    document.getElementById('timeDownloadVal').textContent = `${speed.timings.downloadTimeMs}ms`;
+    document.getElementById('compressionVal').textContent = speed.resources.hasCompression ? 'Activa (Gzip/Brotli)' : 'Inactiva';
+    document.getElementById('compressionVal').style.color = speed.resources.hasCompression ? 'var(--success-color)' : 'var(--warning-color)';
+
+    // Core Web Vitals Grid
+    const cwvGrid = document.getElementById('cwvCardsGrid');
+    cwvGrid.innerHTML = '';
+
+    const vitals = [
+      speed.coreWebVitals.lcp,
+      speed.coreWebVitals.fcp,
+      speed.coreWebVitals.cls,
+      speed.coreWebVitals.tbt,
+      speed.coreWebVitals.ttfb,
+      speed.coreWebVitals.speedIndex
+    ];
+
+    vitals.forEach(v => {
+      const card = document.createElement('div');
+      card.className = `cwv-card cwv-${v.status}`;
+      
+      let statusColor = 'var(--success-color)';
+      let statusBadgeText = 'Bueno';
+      if (v.status === 'moderate') {
+        statusColor = 'var(--warning-color)';
+        statusBadgeText = 'Mejorable';
+      } else if (v.status === 'poor') {
+        statusColor = 'var(--danger-color)';
+        statusBadgeText = 'Lento';
+      }
+
+      card.innerHTML = `
+        <div class="cwv-card-top">
+          <span class="cwv-metric-name">${escapeHtml(v.name)}</span>
+          <span class="cwv-status-badge ${v.status}">${statusBadgeText}</span>
+        </div>
+        <div class="cwv-val" style="color: ${statusColor};">${v.value}</div>
+        <div class="cwv-threshold">${escapeHtml(v.statusLabel)}</div>
+        <p class="cwv-desc">${escapeHtml(v.desc)}</p>
+      `;
+      cwvGrid.appendChild(card);
+    });
+
+    // Resources list
+    const rList = document.getElementById('speedResourcesList');
+    rList.innerHTML = `
+      <li class="resource-item">
+        <span class="resource-name">Tamaño del documento HTML:</span>
+        <span class="resource-val"><strong>${speed.resources.htmlSizeKb} KB</strong> (${speed.resources.htmlSizeBytes.toLocaleString()} bytes)</span>
+      </li>
+      <li class="resource-item">
+        <span class="resource-name">Imágenes analizadas en la página:</span>
+        <span class="resource-val"><strong>${speed.resources.totalImages}</strong> elementos &lt;img&gt;</span>
+      </li>
+      <li class="resource-item">
+        <span class="resource-name">Hojas de estilo externas (CSS):</span>
+        <span class="resource-val"><strong>${speed.resources.totalStyles}</strong> enlaces CSS</span>
+      </li>
+      <li class="resource-item">
+        <span class="resource-name">Scripts externos (JS):</span>
+        <span class="resource-val"><strong>${speed.resources.totalScripts}</strong> scripts externos</span>
+      </li>
+      <li class="resource-item">
+        <span class="resource-name">Protocolo de seguridad y velocidad:</span>
+        <span class="resource-val">${speed.resources.hasHttp2OrTls ? '🔒 HTTPS con cifrado TLS activo' : '⚠️ HTTP sin cifrado'}</span>
+      </li>
+      <li class="resource-item">
+        <span class="resource-name">Cabecera de Caché del Servidor:</span>
+        <span class="resource-val tag-badge">${escapeHtml(speed.resources.cacheControl)}</span>
+      </li>
+    `;
+
+    // External speed test links
+    const extLinks = document.getElementById('externalSpeedLinks');
+    const encodedUrl = encodeURIComponent(targetUrl);
+    extLinks.innerHTML = `
+      <a href="https://pagespeed.web.dev/analysis?url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="speed-ext-btn google-psi">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        <span>Abrir en Google PageSpeed Insights ↗</span>
+      </a>
+      <a href="https://search.google.com/test/rich-results?url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="speed-ext-btn">
+        <span>Prueba de Resultados Enriquecidos de Google ↗</span>
+      </a>
+      <a href="https://webpagetest.org/?url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="speed-ext-btn">
+        <span>Auditar en WebPageTest ↗</span>
+      </a>
+    `;
+  }
 
   // Pixel Width Estimator
   function estimatePixels(text) {

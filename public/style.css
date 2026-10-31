@@ -2323,6 +2323,351 @@ body.light-theme .serp-type-btn.active {
   color: #4f46e5;
 }
 
+/* Speed & Core Web Vitals Tab Styles */
+.speed-overview-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+@media (max-width: 860px) {
+  .speed-overview-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.speed-score-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-right: 1px solid var(--border-color);
+  padding-right: 28px;
+}
+
+@media (max-width: 860px) {
+  .speed-score-col {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-right: 0;
+    padding-bottom: 24px;
+  }
+}
+
+.speed-gauge-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 14px;
+}
+
+.speed-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.speed-svg circle {
+  fill: none;
+  stroke-width: 7;
+}
+
+.speed-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.speed-score-number {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.speed-score-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.speed-badge-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.speed-desc-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.crawl-speed-box {
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--success-color);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.crawl-speed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.crawl-icon {
+  font-size: 1.2rem;
+}
+
+.crawl-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.crawl-tag {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.crawl-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.timings-pills-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.timing-pill {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timing-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.timing-val {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Core Web Vitals Cards Grid */
+.cwv-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cwv-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  position: relative;
+}
+
+.cwv-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.cwv-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cwv-metric-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cwv-status-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.cwv-status-badge.good {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.cwv-status-badge.moderate {
+  background: var(--warning-bg);
+  color: var(--warning-color);
+}
+
+.cwv-status-badge.poor {
+  background: var(--danger-bg);
+  color: var(--danger-color);
+}
+
+.cwv-val {
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.cwv-threshold {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.cwv-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Resources list */
+.resources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resource-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.88rem;
+}
+
+.resource-item:last-child {
+  border-bottom: none;
+}
+
+.resource-name {
+  color: var(--text-muted);
+}
+
+.resource-val {
+  color: var(--text-main);
+}
+
+/* External Speed Links */
+.external-speed-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.speed-ext-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+
+.speed-ext-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateX(4px);
+  color: #fff;
+}
+
+.speed-ext-btn.google-psi {
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.speed-ext-btn.google-psi:hover {
+  background: rgba(99, 102, 241, 0.18);
+}
+
+/* Light theme additions for speed */
+body.light-theme .speed-overview-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+body.light-theme .crawl-speed-box {
+  background: #f8fafc;
+}
+
+body.light-theme .timing-pill {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+body.light-theme .cwv-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+body.light-theme .speed-ext-btn {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+body.light-theme .speed-ext-btn.google-psi {
+  background: rgba(79, 70, 229, 0.08);
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
 /* Print Styles */
 @media print {
   .app-header, .search-box, .quick-examples, .results-tabs, .serp-view-selector, .serp-editor-column, .action-btn, .theme-toggle-btn {

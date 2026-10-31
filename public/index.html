@@ -155,6 +155,10 @@
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
           <span>Auditoría SEO On-Page</span>
         </button>
+        <button type="button" class="tab-btn" data-tab="tab-speed">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Velocidad Web & Core Web Vitals</span>
+        </button>
         <button type="button" class="tab-btn" data-tab="tab-checklist">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           <span>Recomendaciones & Checklist</span>
@@ -465,7 +469,92 @@
         </div>
       </div>
 
-      <!-- Tab 4: Checklist & Recommendations -->
+      <!-- Tab 4: Speed, PageSpeed & Core Web Vitals -->
+      <div id="tab-speed" class="tab-pane">
+        <!-- Speed Overview Banner -->
+        <div class="speed-overview-card">
+          <div class="speed-score-col">
+            <div class="speed-gauge-wrap">
+              <svg class="speed-svg" viewBox="0 0 100 100">
+                <circle class="score-bg" cx="50" cy="50" r="42"></circle>
+                <circle class="score-progress" id="speedCircle" cx="50" cy="50" r="42"></circle>
+              </svg>
+              <div class="speed-center-text">
+                <span id="speedScoreVal" class="speed-score-number">--</span>
+                <span class="speed-score-sub">/100</span>
+              </div>
+            </div>
+            <div class="speed-score-label">
+              <span class="speed-badge-pill" id="speedBadgePill">Puntuación de Velocidad</span>
+              <span class="speed-desc-text">Rendimiento estilo Google PageSpeed</span>
+            </div>
+          </div>
+
+          <div class="speed-info-col">
+            <div class="crawl-speed-box" id="crawlSpeedBox">
+              <div class="crawl-speed-header">
+                <span class="crawl-icon">⚡</span>
+                <span class="crawl-title">Velocidad de Respuesta & Rastreo (Googlebot)</span>
+                <span class="crawl-tag" id="crawlRatingTag">Ultra Rápido</span>
+              </div>
+              <p class="crawl-desc" id="crawlVerdictText">El servidor respondió en tiempo récord, permitiendo a los bots de Google y Bing indexar páginas a máxima velocidad sin agotar el Crawl Budget.</p>
+            </div>
+
+            <div class="timings-pills-row">
+              <div class="timing-pill">
+                <span class="timing-label">Tiempo Total</span>
+                <span class="timing-val" id="timeTotalVal">0ms</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">TTFB (Primer Byte)</span>
+                <span class="timing-val" id="timeTtfbVal">0ms</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">Descarga HTML</span>
+                <span class="timing-val" id="timeDownloadVal">0ms</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">Compresión</span>
+                <span class="timing-val" id="compressionVal">Gzip / Brotli</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Web Vitals Section -->
+        <h2 class="section-title" style="margin-top: 36px;">Métricas Core Web Vitals de Google</h2>
+        <p class="section-subtitle">Factores de posicionamiento oficiales que Google Search utiliza para evaluar la experiencia del usuario y la velocidad en móvil y escritorio.</p>
+
+        <div class="cwv-cards-grid" id="cwvCardsGrid">
+          <!-- Injected via app.js -->
+        </div>
+
+        <!-- Resource Analysis & Recommendations for Speed -->
+        <div class="two-columns-grid" style="margin-top: 28px;">
+          <div class="card-box">
+            <div class="card-title-group">
+              <span class="card-icon">📦</span>
+              <h3>Inventario de Recursos de la Página</h3>
+            </div>
+            <ul class="resources-list" id="speedResourcesList">
+              <!-- Injected via app.js -->
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <div class="card-title-group">
+              <span class="card-icon">🚀</span>
+              <h3>Auditoría Externa Oficial de Google</h3>
+            </div>
+            <p class="card-sub">Consulta los informes completos y pruebas de campo en vivo de Google:</p>
+            <div class="external-speed-links" id="externalSpeedLinks">
+              <!-- Injected via app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Checklist & Recommendations -->
       <div id="tab-checklist" class="tab-pane">
         <div class="checklist-header-bar">
           <div class="filter-pills">
