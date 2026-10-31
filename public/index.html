@@ -159,6 +159,18 @@
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
           <span>Velocidad Web & Core Web Vitals</span>
         </button>
+        <button type="button" class="tab-btn" data-tab="tab-security">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Seguridad & Cabeceras</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-schema">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span>Rich Snippets & Schema</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-international">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span>SEO Internacional</span>
+        </button>
         <button type="button" class="tab-btn" data-tab="tab-checklist">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
           <span>Recomendaciones & Checklist</span>
@@ -551,6 +563,134 @@
               <!-- Injected via app.js -->
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Tab: Security & HTTP Headers -->
+      <div id="tab-security" class="tab-pane">
+        <div class="speed-overview-card">
+          <div class="speed-score-col">
+            <div class="speed-gauge-wrap">
+              <svg class="speed-svg" viewBox="0 0 100 100">
+                <circle class="score-bg" cx="50" cy="50" r="42"></circle>
+                <circle class="score-progress" id="secCircle" cx="50" cy="50" r="42"></circle>
+              </svg>
+              <div class="speed-center-text">
+                <span id="secScoreVal" class="speed-score-number">--</span>
+                <span class="speed-score-sub">/100</span>
+              </div>
+            </div>
+            <div class="speed-score-label">
+              <span class="speed-badge-pill" id="secBadgePill">Puntuación de Seguridad</span>
+              <span class="speed-desc-text">Confianza y Cabeceras Web</span>
+            </div>
+          </div>
+          <div class="speed-info-col">
+            <div class="crawl-speed-box" id="secVerdictBox">
+              <div class="crawl-speed-header">
+                <span class="crawl-icon">🛡️</span>
+                <span class="crawl-title">Estado de Protección del Servidor</span>
+                <span class="crawl-tag" id="secVerdictTag">HTTPS Activo</span>
+              </div>
+              <p class="crawl-desc" id="secVerdictDesc">Evaluación de defensas HTTP contra inyecciones XSS, clickjacking y fugas de datos.</p>
+            </div>
+            <div class="timings-pills-row">
+              <div class="timing-pill">
+                <span class="timing-label">Cifrado SSL/TLS</span>
+                <span class="timing-val" id="secTlsVal">HTTPS</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">HSTS</span>
+                <span class="timing-val" id="secHstsVal">Activo</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">Protección Frames</span>
+                <span class="timing-val" id="secXFrameVal">SAMEORIGIN</span>
+              </div>
+              <div class="timing-pill">
+                <span class="timing-label">Contenido Mixto</span>
+                <span class="timing-val" id="secMixedVal">0 alertas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 36px;">Cabeceras de Seguridad del Servidor</h2>
+        <div class="tech-table-container">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Cabecera de Seguridad</th>
+                <th>Estado</th>
+                <th>Valor Detectado</th>
+                <th>Impacto de Seguridad & SEO</th>
+              </tr>
+            </thead>
+            <tbody id="securityTableBody">
+              <!-- Injected via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Schema & Rich Snippets -->
+      <div id="tab-schema" class="tab-pane">
+        <div class="card-box">
+          <div class="card-title-group">
+            <span class="card-icon">⭐</span>
+            <h3>Previsualización de Rich Snippets en Google</h3>
+          </div>
+          <p class="card-sub">Así se visualizan en Google los datos estructurados Schema.org detectados en tu página:</p>
+          <div class="rich-snippet-preview-box" id="richSnippetPreviewBox">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 36px;">Esquemas JSON-LD Detectados</h2>
+        <div class="schema-cards-grid" id="schemaCardsGrid">
+          <!-- Injected via app.js -->
+        </div>
+      </div>
+
+      <!-- Tab: International SEO (hreflang) -->
+      <div id="tab-international" class="tab-pane">
+        <div class="card-box">
+          <div class="card-title-group">
+            <span class="card-icon">🌐</span>
+            <h3>Diagnóstico de Idioma y Geolocalización</h3>
+          </div>
+          <div class="timings-pills-row" style="margin-top: 14px;">
+            <div class="timing-pill">
+              <span class="timing-label">Idioma Declarado (&lt;html lang&gt;)</span>
+              <span class="timing-val" id="intlHtmlLang">es</span>
+            </div>
+            <div class="timing-pill">
+              <span class="timing-label">Codificación (Charset)</span>
+              <span class="timing-val" id="intlCharset">UTF-8</span>
+            </div>
+            <div class="timing-pill">
+              <span class="timing-label">Versiones hreflang</span>
+              <span class="timing-val" id="intlHreflangCount">0 detectadas</span>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 36px;">Etiquetas Alternativas hreflang</h2>
+        <p class="section-subtitle">Indican a Google qué versión de la página mostrar según el país y el idioma del usuario.</p>
+        <div class="tech-table-container">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Código Idioma / Región</th>
+                <th>URL de Destino</th>
+                <th>Autorreferencia</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="hreflangTableBody">
+              <!-- Injected via app.js -->
+            </tbody>
+          </table>
         </div>
       </div>
 

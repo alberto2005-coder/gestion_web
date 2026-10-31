@@ -452,6 +452,24 @@ app.get('/api/analyze', async (req, res) => {
   const charset = $('meta[charset]').attr('charset') || $('meta[http-equiv="Content-Type" i]').attr('content') || '';
   const htmlLang = $('html').attr('lang') || '';
 
+  // SEO Internacional (hreflang tags)
+  const hreflangs = [];
+  $('link[rel="alternate" i][hreflang]').each((_, el) => {
+    const lang = $(el).attr('hreflang')?.trim();
+    const href = $(el).attr('href')?.trim();
+    if (lang && href) {
+      try {
+        hreflangs.push({
+          lang,
+          url: new URL(href, targetUrl).href,
+          isSelf: new URL(href, targetUrl).href === targetUrl
+        });
+      } catch (_) {
+        hreflangs.push({ lang, url: href, isSelf: false });
+      }
+    }
+  });
+
   // Favicon
   let favicon = $('link[rel*="icon" i]').attr('href') || '/favicon.ico';
   try {
@@ -534,13 +552,39 @@ app.get('/api/analyze', async (req, res) => {
     }
   });
 
-  // Structured Data (Schema JSON-LD)
+  // Structured Data (Schema JSON-LD & Rich Snippets detection)
   const schemas = [];
+  const structuredDataDetails = [];
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
-      const data = JSON.parse($(el).html() || '{}');
-      if (data['@type']) schemas.push(data['@type']);
-      else if (Array.isArray(data)) schemas.push(...data.map(d => d['@type']).filter(Boolean));
+      const rawText = $(el).html() || '{}';
+      const data = JSON.parse(rawText);
+      const pushSchema = (item) => {
+        if (!item || typeof item !== 'object') return;
+        const type = item['@type'];
+        if (type) {
+          schemas.push(type);
+          structuredDataDetails.push({
+            type,
+            name: item.name || item.headline || item.title || null,
+            description: item.description ? item.description.substring(0, 120) : null,
+            rating: item.aggregateRating?.ratingValue || item.reviewRating?.ratingValue || null,
+            reviewCount: item.aggregateRating?.ratingCount || item.aggregateRating?.reviewCount || null,
+            price: item.offers?.price || item.offers?.lowPrice || null,
+            currency: item.offers?.priceCurrency || null,
+            inStock: item.offers?.availability ? item.offers.availability.includes('InStock') : null,
+            faqQuestions: Array.isArray(item.mainEntity) ? item.mainEntity.map(q => q.name).filter(Boolean).slice(0, 4) : []
+          });
+        }
+      };
+
+      if (Array.isArray(data)) {
+        data.forEach(pushSchema);
+      } else if (data['@graph'] && Array.isArray(data['@graph'])) {
+        data['@graph'].forEach(pushSchema);
+      } else {
+        pushSchema(data);
+      }
     } catch (_) {}
   });
 
@@ -562,6 +606,50 @@ app.get('/api/analyze', async (req, res) => {
   const hasNoFollow = robotsComb.includes('nofollow');
   const hasNoSnippet = robotsComb.includes('nosnippet');
   const isHttps = parsedUrl.protocol === 'https:';
+
+  // Security & HTTP Headers Audit
+  const hsts = headers['strict-transport-security'] || null;
+  const csp = headers['content-security-policy'] || headers['content-security-policy-report-only'] || null;
+  const xFrameOptions = headers['x-frame-options'] || null;
+  const xContentTypeOptions = headers['x-content-type-options'] || null;
+  const referrerPolicy = headers['referrer-policy'] || $('meta[name="referrer" i]').attr('content') || null;
+  const permissionsPolicy = headers['permissions-policy'] || headers['feature-policy'] || null;
+
+  // Mixed content detection (if HTTPS page loads HTTP assets)
+  let mixedContentCount = 0;
+  const mixedContentSamples = [];
+  if (isHttps) {
+    $('img[src^="http:"], script[src^="http:"], link[href^="http:"]').each((_, el) => {
+      mixedContentCount++;
+      const src = $(el).attr('src') || $(el).attr('href') || '';
+      if (mixedContentSamples.length < 4 && src) mixedContentSamples.push(src);
+    });
+  }
+
+  let securityScore = 100;
+  if (!isHttps) securityScore -= 40;
+  if (!hsts) securityScore -= 15;
+  if (!csp) securityScore -= 15;
+  if (!xFrameOptions) securityScore -= 15;
+  if (!xContentTypeOptions) securityScore -= 10;
+  if (mixedContentCount > 0) securityScore -= 15;
+  securityScore = Math.max(10, Math.min(100, securityScore));
+
+  const securityAudit = {
+    score: securityScore,
+    isHttps,
+    hsts: { present: !!hsts, value: hsts },
+    csp: { present: !!csp, value: csp ? (csp.length > 80 ? csp.substring(0, 80) + '...' : csp) : null },
+    xFrameOptions: { present: !!xFrameOptions, value: xFrameOptions },
+    xContentTypeOptions: { present: !!xContentTypeOptions, value: xContentTypeOptions },
+    referrerPolicy: { present: !!referrerPolicy, value: referrerPolicy },
+    permissionsPolicy: { present: !!permissionsPolicy, value: permissionsPolicy },
+    mixedContent: {
+      hasMixedContent: mixedContentCount > 0,
+      count: mixedContentCount,
+      samples: mixedContentSamples
+    }
+  };
 
   // Calculate Web Speed & Core Web Vitals audit
   const contentEncoding = (headers['content-encoding'] || '').toLowerCase();
@@ -1116,9 +1204,12 @@ app.get('/api/analyze', async (req, res) => {
       },
       topKeywords,
       schemas,
+      structuredDataDetails,
+      hreflangs,
       htmlLang,
       charset
     },
+    security: securityAudit,
     searchEngines: searchUrls,
     presenceSummary: {
       totalIndexed: totalEnginesIndexed,

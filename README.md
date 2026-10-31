@@ -1,6 +1,6 @@
-# IndexPulse — SERP Studio, SEO & Web Speed Analyzer
+# IndexPulse — SERP Studio, SEO, Web Speed & Security Suite
 
-Aplicación web profesional para comprobar el estado de indexación de cualquier página web, previsualizar exactamente cómo aparece en Google y Bing (SERP Snippet), medir la velocidad de carga y Core Web Vitals (Google PageSpeed), y auditar su salud SEO en tiempo real.
+Aplicación web profesional para comprobar el estado de indexación de cualquier página web, previsualizar exactamente cómo aparece en Google y Bing (SERP Snippet & Rich Snippets), auditar la seguridad web y cabeceras HTTP, diagnosticar SEO internacional (`hreflang`), medir la velocidad de carga (Core Web Vitals) y auditar la salud SEO en tiempo real.
 
 ---
 
@@ -21,17 +21,27 @@ Aplicación web profesional para comprobar el estado de indexación de cualquier
    - **Puntuación de Rendimiento (0-100)**: Medidor visual calibrado con los estándares de Google Lighthouse.
    - **Métricas Core Web Vitals**: LCP (Largest Contentful Paint), FCP (First Contentful Paint), CLS (Cumulative Layout Shift), TBT (Total Blocking Time), TTFB (Time to First Byte) y Speed Index con indicadores de estado (Bueno, Mejorable, Lento).
    - **Velocidad de Rastreo para Googlebot / Bingbot**: Evaluación del impacto en el Crawl Budget y latencia de respuesta directa del servidor.
-   - **Inventario de Recursos**: Análisis de peso HTML, compresión Gzip/Brotli, cantidad de hojas de estilo (CSS), scripts (JS) y enlaces directos para auditar en Google PageSpeed Insights oficial.
+   - **Inventario de Recursos**: Análisis de peso HTML, compresión Gzip/Brotli, cantidad de hojas de estilo (CSS), scripts (JS) y enlaces directos a Google PageSpeed Insights.
 
-4. **Auditoría SEO On-Page Exhaustiva**:
+4. **Auditoría de Seguridad & Cabeceras HTTP**:
+   - **Puntuación de Seguridad (0 a 100)** y medidor de confianza.
+   - **Cabeceras de Defensa**: Análisis de HTTPS/TLS, HSTS (*Strict-Transport-Security*), CSP (*Content-Security-Policy*), *X-Frame-Options* (contra Clickjacking), *X-Content-Type-Options* y *Referrer-Policy*.
+   - **Detección de Contenido Mixto (Mixed Content)**: Alerta si una web HTTPS carga imágenes, scripts o estilos en HTTP plano no seguro.
+
+5. **Datos Estructurados Schema.org & Rich Snippets**:
+   - **Simulación de Resultados Enriquecidos**: Visualización de estrellitas de valoración (⭐⭐⭐⭐⭐), precios de producto, disponibilidad de stock y acordeones de preguntas frecuentes (FAQ).
+   - **Inspector de Esquemas JSON-LD**: Desglose de tipos declarados (`@type`: Article, Product, Organization, FAQPage, etc.).
+
+6. **SEO Internacional & Multilingüe (`hreflang`)**:
+   - Detección y validación de etiquetas `<link rel="alternate" hreflang="...">`.
+   - Comprobación de autorreferencia de idioma y código de idioma ISO del elemento `<html lang>`.
+
+7. **Auditoría SEO On-Page Exhaustiva**:
    - **Puntuación de Salud SEO (0 a 100)** con indicador circular animado y clasificación (Excelente, Bueno, Requiere Mejoras, Crítico).
    - Conteo de palabras, ratio texto/código HTML y tiempo de respuesta del servidor (TTFB).
-   - Auditoría de encabezados `<h1>` a `<h4>` (detección de H1 faltante o duplicado).
-   - Auditoría de imágenes: conteo de imágenes sin atributo `alt` obligatorio y galería de muestra.
-   - Nube y tabla de densidad de palabras clave principales.
-   - Enlaces internos vs externos y atributos `nofollow`.
+   - Jerarquía de encabezados `<h1>` a `<h4>`, auditoría de imágenes sin `alt` y densidad de palabras clave.
 
-5. **Recomendaciones y Checklist Accionable**:
+8. **Recomendaciones y Checklist Accionable**:
    - Clasificación por severidad: 🔴 Crítico, 🟡 Advertencias y 🟢 Aprobados.
    - Filtros dinámicos y botón de **Imprimir / Exportar Informe a PDF**.
 

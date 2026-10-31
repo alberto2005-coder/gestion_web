@@ -2668,6 +2668,124 @@ body.light-theme .speed-ext-btn.google-psi {
   color: #4f46e5;
 }
 
+/* Security, Schema & International Styles */
+.schema-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.schema-item-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.schema-type-badge {
+  display: inline-block;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.schema-field {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.schema-field strong {
+  color: var(--text-main);
+}
+
+.stars-gold {
+  color: #f59e0b;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.rich-stars-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.rich-rating-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.rich-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.rich-price-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--success-color);
+}
+
+.rich-stock-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.rich-stock-pill.in-stock {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.rich-stock-pill.out-stock {
+  background: var(--danger-bg);
+  color: var(--danger-color);
+}
+
+.rich-faq-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rich-faq-item {
+  font-size: 0.82rem;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.08);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-primary);
+}
+
+.no-rich-hint {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* Light theme additions */
+body.light-theme .schema-item-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+body.light-theme .rich-faq-item {
+  background: #f1f5f9;
+  color: #4f46e5;
+}
+
 /* Print Styles */
 @media print {
   .app-header, .search-box, .quick-examples, .results-tabs, .serp-view-selector, .serp-editor-column, .action-btn, .theme-toggle-btn {

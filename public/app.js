@@ -254,7 +254,18 @@ document.addEventListener('DOMContentLoaded', () => {
       renderSpeedTab(data.speed, data.url);
     }
 
-    // 9. Recommendations Checklist
+    // 9. Security & Headers Tab
+    if (data.security) {
+      renderSecurityTab(data.security);
+    }
+
+    // 10. Schema & Rich Snippets Tab
+    renderSchemaTab(data);
+
+    // 11. International SEO Tab
+    renderInternationalTab(data.contentAnalysis);
+
+    // 12. Recommendations Checklist
     renderChecklist(data.audit);
   }
 
@@ -828,6 +839,252 @@ document.addEventListener('DOMContentLoaded', () => {
         <span>Auditar en WebPageTest ↗</span>
       </a>
     `;
+  }
+
+  // Render Security Tab
+  function renderSecurityTab(sec) {
+    const secScoreVal = document.getElementById('secScoreVal');
+    const secBadgePill = document.getElementById('secBadgePill');
+    const secCircle = document.getElementById('secCircle');
+
+    secScoreVal.textContent = sec.score;
+    const totalCirc = 263.89;
+    const offset = totalCirc - (sec.score / 100) * totalCirc;
+
+    let secColor = 'var(--success-color)';
+    let secGrade = 'Excelente';
+    if (sec.score < 50) {
+      secColor = 'var(--danger-color)';
+      secGrade = 'Crítico';
+    } else if (sec.score < 80) {
+      secColor = 'var(--warning-color)';
+      secGrade = 'Mejorable';
+    }
+
+    secBadgePill.textContent = secGrade;
+    secBadgePill.style.backgroundColor = secColor;
+    secCircle.style.stroke = secColor;
+    secCircle.style.strokeDashoffset = offset;
+
+    const secVerdictTag = document.getElementById('secVerdictTag');
+    const secVerdictDesc = document.getElementById('secVerdictDesc');
+    const secVerdictBox = document.getElementById('secVerdictBox');
+
+    secVerdictTag.textContent = sec.isHttps ? 'HTTPS Seguro' : 'Inseguro (HTTP)';
+    secVerdictTag.style.backgroundColor = sec.isHttps ? 'var(--success-color)' : 'var(--danger-color)';
+    secVerdictBox.style.borderLeftColor = secColor;
+
+    if (!sec.isHttps) {
+      secVerdictDesc.textContent = 'Alerta: El sitio no usa cifrado HTTPS. Google penaliza páginas sin HTTPS y los navegadores muestran advertencias de "No seguro".';
+    } else if (sec.mixedContent.hasMixedContent) {
+      secVerdictDesc.textContent = `Atención: Se detectaron ${sec.mixedContent.count} recursos cargados por HTTP plano en una web HTTPS (Contenido Mixto).`;
+    } else {
+      secVerdictDesc.textContent = 'El canal de comunicación entre el usuario y el servidor está cifrado correctamente con protocolo HTTPS/TLS.';
+    }
+
+    document.getElementById('secTlsVal').textContent = sec.isHttps ? '🔒 TLS Activo' : '✗ Sin Cifrado';
+    document.getElementById('secHstsVal').textContent = sec.hsts.present ? '✓ Activo' : '✗ Ausente';
+    document.getElementById('secXFrameVal').textContent = sec.xFrameOptions.present ? sec.xFrameOptions.value : '✗ Sin cabecera';
+    document.getElementById('secMixedVal').textContent = `${sec.mixedContent.count} alertas`;
+    document.getElementById('secMixedVal').style.color = sec.mixedContent.count > 0 ? 'var(--danger-color)' : 'var(--success-color)';
+
+    // Table
+    const tbody = document.getElementById('securityTableBody');
+    tbody.innerHTML = '';
+
+    const headersList = [
+      {
+        name: 'Protocolo HTTPS (SSL/TLS)',
+        present: sec.isHttps,
+        val: sec.isHttps ? 'Habilitado y en uso' : 'No disponible (HTTP inseguro)',
+        desc: 'Requisito obligatorio de Google para el algoritmo de posicionamiento Page Experience.'
+      },
+      {
+        name: 'Strict-Transport-Security (HSTS)',
+        present: sec.hsts.present,
+        val: sec.hsts.value || 'Cabecera no enviada',
+        desc: 'Fuerza a todos los navegadores a conectarse únicamente mediante HTTPS cifrado.'
+      },
+      {
+        name: 'Content-Security-Policy (CSP)',
+        present: sec.csp.present,
+        val: sec.csp.value || 'Cabecera no configurada',
+        desc: 'Evita ataques de inyección de código malicioso XSS y robo de cookies.'
+      },
+      {
+        name: 'X-Frame-Options',
+        present: sec.xFrameOptions.present,
+        val: sec.xFrameOptions.value || 'Cabecera no enviada',
+        desc: 'Protege contra ataques de clickjacking impidiendo que carguen tu web dentro de un iframe malicioso.'
+      },
+      {
+        name: 'X-Content-Type-Options',
+        present: sec.xContentTypeOptions.present,
+        val: sec.xContentTypeOptions.value || 'Cabecera no enviada',
+        desc: 'Impide que los navegadores hagan sniffing del tipo MIME de los archivos.'
+      },
+      {
+        name: 'Referrer-Policy',
+        present: sec.referrerPolicy.present,
+        val: sec.referrerPolicy.value || 'Sin configurar',
+        desc: 'Controla cuánta información de referencia (URL anterior) se envía al hacer clic en enlaces externos.'
+      }
+    ];
+
+    headersList.forEach(h => {
+      const tr = document.createElement('tr');
+      const icon = h.present ? '✓' : '⚠';
+      const statusClass = h.present ? 'ok' : 'warn';
+      const statusText = h.present ? 'Protegido' : 'No configurado';
+      tr.innerHTML = `
+        <td><strong>${escapeHtml(h.name)}</strong></td>
+        <td><span class="status-cell-badge ${statusClass}">${icon} ${statusText}</span></td>
+        <td><span class="tag-badge">${escapeHtml(h.val)}</span></td>
+        <td style="font-size: 0.85rem; color: var(--text-muted);">${h.desc}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Render Schema Tab
+  function renderSchemaTab(data) {
+    const c = data.contentAnalysis;
+    const previewBox = document.getElementById('richSnippetPreviewBox');
+    const cardsGrid = document.getElementById('schemaCardsGrid');
+
+    previewBox.innerHTML = '';
+    cardsGrid.innerHTML = '';
+
+    const hasSchemas = c.structuredDataDetails && c.structuredDataDetails.length > 0;
+    
+    // Check for Rich elements
+    let ratingData = null;
+    let priceData = null;
+    let faqData = null;
+
+    if (hasSchemas) {
+      c.structuredDataDetails.forEach(s => {
+        if (s.rating && !ratingData) ratingData = { rating: s.rating, count: s.reviewCount };
+        if (s.price && !priceData) priceData = { price: s.price, currency: s.currency, inStock: s.inStock };
+        if (s.faqQuestions && s.faqQuestions.length > 0 && !faqData) faqData = s.faqQuestions;
+      });
+    }
+
+    // Google SERP Rich Snippet Simulation
+    const title = data.serp.title || 'Título de ejemplo';
+    const desc = data.serp.displaySnippet || '';
+    const breadcrumb = data.serp.breadcrumbDisplay || data.domain;
+
+    let richExtrasHtml = '';
+    if (ratingData) {
+      richExtrasHtml += `
+        <div class="rich-stars-row">
+          <span class="stars-gold">★★★★★</span>
+          <span class="rich-rating-text">Calificación: ${ratingData.rating}/5 · ${ratingData.count ? `${ratingData.count} votos` : 'Opiniones de clientes'}</span>
+        </div>
+      `;
+    }
+    if (priceData) {
+      richExtrasHtml += `
+        <div class="rich-price-row">
+          <span class="rich-price-val">${priceData.currency || '$'}${priceData.price}</span>
+          ${priceData.inStock !== null ? `<span class="rich-stock-pill ${priceData.inStock ? 'in-stock' : 'out-stock'}">${priceData.inStock ? 'En stock' : 'Agotado'}</span>` : ''}
+        </div>
+      `;
+    }
+    if (faqData && faqData.length > 0) {
+      richExtrasHtml += `
+        <div class="rich-faq-list">
+          ${faqData.map(q => `<div class="rich-faq-item">▼ ${escapeHtml(q)}</div>`).join('')}
+        </div>
+      `;
+    }
+
+    if (!richExtrasHtml) {
+      richExtrasHtml = `
+        <div class="no-rich-hint">
+          <em>No se detectaron marcas de valoración (Rating), ofertas (Price) o FAQs para generar Rich Snippets visuales directos.</em>
+        </div>
+      `;
+    }
+
+    previewBox.innerHTML = `
+      <div class="google-desktop-snippet" style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px;">
+        <div class="g-source-row">
+          <div class="g-favicon-wrapper">
+            <img src="${data.serp.favicon}" alt="Favicon" class="g-favicon" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%239aa0a6%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>'">
+          </div>
+          <div class="g-source-texts">
+            <span class="g-sitename">${data.domain}</span>
+            <span class="g-breadcrumb">${escapeHtml(breadcrumb)}</span>
+          </div>
+        </div>
+        <h3 class="g-title" style="margin-top: 6px;">${escapeHtml(title)}</h3>
+        ${richExtrasHtml}
+        <div class="g-snippet" style="margin-top: 6px;">${escapeHtml(desc)}</div>
+      </div>
+    `;
+
+    // Schema Cards Grid
+    if (!hasSchemas) {
+      cardsGrid.innerHTML = `
+        <div class="card-box" style="grid-column: 1 / -1; text-align: center; padding: 36px 20px;">
+          <p style="color: var(--text-dim); margin-bottom: 8px;">No se encontraron etiquetas de datos estructurados <code>application/ld+json</code> en el código fuente.</p>
+          <small style="color: var(--text-muted);">Implementar Schema.org ayuda a los motores de búsqueda a entender el contenido semánticamente.</small>
+        </div>
+      `;
+    } else {
+      c.structuredDataDetails.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'schema-item-card';
+        card.innerHTML = `
+          <div class="schema-card-header">
+            <span class="schema-type-badge">@type: ${escapeHtml(s.type)}</span>
+          </div>
+          <div class="schema-body">
+            ${s.name ? `<div class="schema-field"><strong>Nombre:</strong> ${escapeHtml(s.name)}</div>` : ''}
+            ${s.description ? `<div class="schema-field"><strong>Descripción:</strong> ${escapeHtml(s.description)}...</div>` : ''}
+            ${s.rating ? `<div class="schema-field"><strong>Valoración:</strong> ⭐ ${s.rating} (${s.reviewCount || 0} reseñas)</div>` : ''}
+            ${s.price ? `<div class="schema-field"><strong>Precio:</strong> ${s.currency || ''} ${s.price}</div>` : ''}
+          </div>
+        `;
+        cardsGrid.appendChild(card);
+      });
+    }
+  }
+
+  // Render International Tab
+  function renderInternationalTab(contentAnalysis) {
+    document.getElementById('intlHtmlLang').textContent = contentAnalysis.htmlLang || 'No especificado';
+    document.getElementById('intlCharset').textContent = contentAnalysis.charset || 'No detectado';
+    
+    const hreflangs = contentAnalysis.hreflangs || [];
+    document.getElementById('intlHreflangCount').textContent = `${hreflangs.length} etiquetas`;
+
+    const tbody = document.getElementById('hreflangTableBody');
+    tbody.innerHTML = '';
+
+    if (hreflangs.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="4" style="text-align: center; color: var(--text-dim); padding: 30px;">
+            No se encontraron etiquetas <code>&lt;link rel="alternate" hreflang="..."&gt;</code> en el encabezado HTML.<br>
+            <small style="color: var(--text-muted);">Si el sitio web está dirigido a un único idioma o país, no son obligatorias.</small>
+          </td>
+        </tr>
+      `;
+    } else {
+      hreflangs.forEach(h => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="tag-badge" style="font-weight: 700;">${escapeHtml(h.lang)}</span></td>
+          <td style="word-break: break-all;"><a href="${escapeHtml(h.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary);">${escapeHtml(h.url)}</a></td>
+          <td>${h.isSelf ? '<span class="status-cell-badge ok">✓ Sí (Autorreferencia)</span>' : '<span class="status-cell-badge">Enlace alternativo</span>'}</td>
+          <td><span class="status-cell-badge ok">Válido</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
   }
 
   // Pixel Width Estimator
