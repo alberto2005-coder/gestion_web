@@ -2786,12 +2786,83 @@ body.light-theme .rich-faq-item {
   color: #4f46e5;
 }
 
-/* Print Styles */
+/* Print / PDF Export Styles */
 @media print {
-  .app-header, .search-box, .quick-examples, .results-tabs, .serp-view-selector, .serp-editor-column, .action-btn, .theme-toggle-btn {
+  .app-header, 
+  .hero-section,
+  .search-box, 
+  .quick-examples, 
+  .results-tabs, 
+  .serp-view-selector, 
+  .serp-editor-column, 
+  .checklist-header-bar,
+  .filter-pills,
+  .action-btn, 
+  .theme-toggle-btn,
+  .app-footer,
+  .error-banner,
+  .bg-glow,
+  .bg-grid {
     display: none !important;
   }
-  body { background: #fff !important; color: #000 !important; }
-  .tab-pane { display: block !important; margin-bottom: 30px; }
-  .card-box, .summary-card, .engine-card { border: 1px solid #ccc !important; box-shadow: none !important; }
+
+  body { 
+    background: #ffffff !important; 
+    color: #0f172a !important; 
+    font-size: 11pt !important;
+  }
+
+  .results-section {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  /* Make ALL tabs visible sequentially in the printed PDF report */
+  .tab-pane { 
+    display: block !important; 
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-bottom: 24px !important;
+    page-break-inside: avoid;
+  }
+
+  .serp-card-container {
+    display: block !important;
+    margin-bottom: 20px !important;
+  }
+
+  .card-box, 
+  .summary-card, 
+  .engine-card, 
+  .speed-overview-card, 
+  .cwv-card, 
+  .checklist-card,
+  .tech-table-container { 
+    border: 1px solid #cbd5e1 !important; 
+    box-shadow: none !important; 
+    background: #ffffff !important;
+    color: #0f172a !important;
+    page-break-inside: avoid;
+  }
+
+  .score-number, .speed-score-number {
+    color: #0f172a !important;
+  }
+
+  .tech-table th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+
+  .tech-table td {
+    color: #1e293b !important;
+  }
+
+  .g-title {
+    color: #1a0dab !important;
+  }
+
+  .g-snippet, .card-sub, .section-subtitle {
+    color: #475569 !important;
+  }
 }

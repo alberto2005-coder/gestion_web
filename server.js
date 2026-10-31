@@ -1095,8 +1095,124 @@ app.get('/api/analyze', async (req, res) => {
   if (schemas.length > 0) {
     passed.push({
       category: 'Datos Estructurados',
-      title: `Datos estructurados Schema.org (${schemas.join(', ')})`,
-      desc: 'Permite a Google generar resultados enriquecidos (Rich Snippets).'
+      title: `Datos estructurados Schema.org detectados (${schemas.slice(0, 3).join(', ')})`,
+      desc: 'Habilita a Google para interpretar la semántica del contenido y mostrar Rich Snippets (estrellas, FAQs, ofertas).'
+    });
+  } else {
+    issues.push({
+      type: 'warning',
+      category: 'Datos Estructurados',
+      title: 'Sin datos estructurados Schema.org',
+      desc: 'No se detectó marcado JSON-LD. Añadir esquemas Schema.org incrementa el CTR y mejora la presencia en Google SERP.'
+    });
+  }
+
+  // 6. Seguridad y Cabeceras HTTP
+  if (hsts) {
+    passed.push({
+      category: 'Seguridad',
+      title: 'Cabecera HSTS activa',
+      desc: 'Fuerza conexiones estrictas mediante HTTPS para prevenir ataques man-in-the-middle.'
+    });
+  } else if (isHttps) {
+    issues.push({
+      type: 'warning',
+      category: 'Seguridad',
+      title: 'Falta cabecera HSTS (Strict-Transport-Security)',
+      desc: 'Se recomienda activar HSTS en el servidor para forzar a los navegadores a comunicarse siempre bajo HTTPS.'
+    });
+  }
+
+  if (csp) {
+    passed.push({
+      category: 'Seguridad',
+      title: 'Content-Security-Policy (CSP) configurada',
+      desc: 'Defensa activa contra inyecciones XSS y ejecución de código no autorizado.'
+    });
+  } else {
+    issues.push({
+      type: 'warning',
+      category: 'Seguridad',
+      title: 'Falta cabecera CSP (Content-Security-Policy)',
+      desc: 'Configurar CSP previene la inyección de scripts externos maliciosos y robo de datos.'
+    });
+  }
+
+  if (xFrameOptions) {
+    passed.push({
+      category: 'Seguridad',
+      title: `Protección Clickjacking activa (${xFrameOptions})`,
+      desc: 'X-Frame-Options configurada adecuadamente.'
+    });
+  } else {
+    issues.push({
+      type: 'warning',
+      category: 'Seguridad',
+      title: 'Falta cabecera X-Frame-Options',
+      desc: 'Sin esta cabecera, sitios externos pueden incrustar tu web en iframes invisibles (ataque clickjacking).'
+    });
+  }
+
+  if (xContentTypeOptions) {
+    passed.push({
+      category: 'Seguridad',
+      title: 'Protección MIME Sniffing activa (nosniff)',
+      desc: 'X-Content-Type-Options impide a los navegadores interpretar archivos como un MIME incorrecto.'
+    });
+  } else {
+    issues.push({
+      type: 'warning',
+      category: 'Seguridad',
+      title: 'Falta cabecera X-Content-Type-Options: nosniff',
+      desc: 'Se aconseja activar nosniff para evitar vulnerabilidades de interpretación de tipos de archivo.'
+    });
+  }
+
+  if (mixedContentCount > 0) {
+    score -= 10;
+    issues.push({
+      type: 'critical',
+      category: 'Seguridad',
+      title: `Contenido Mixto detectado (${mixedContentCount} elementos HTTP)`,
+      desc: 'La página carga recursos inseguros por HTTP dentro de una conexión HTTPS. Los navegadores modernos bloquean estos recursos.'
+    });
+  } else if (isHttps) {
+    passed.push({
+      category: 'Seguridad',
+      title: 'Sin Contenido Mixto (Mixed Content)',
+      desc: 'Todos los recursos se sirven a través del canal cifrado seguro.'
+    });
+  }
+
+  // 7. SEO Internacional y Rendimiento Core Web Vitals
+  if (!htmlLang) {
+    score -= 4;
+    issues.push({
+      type: 'warning',
+      category: 'Internacional',
+      title: 'Falta atributo lang en etiqueta <html>',
+      desc: 'Google y los lectores de pantalla necesitan conocer el idioma principal del documento (ej: lang="es").'
+    });
+  } else {
+    passed.push({
+      category: 'Internacional',
+      title: `Idioma declarado correctamente (lang="${htmlLang}")`,
+      desc: 'Facilita la indexación regional en los resultados de búsqueda de Google.'
+    });
+  }
+
+  if (hasCompression) {
+    passed.push({
+      category: 'Rendimiento',
+      title: 'Compresión en servidor activa (Gzip / Brotli)',
+      desc: 'Reduce sustancialmente el peso de transferencia de los recursos de la web.'
+    });
+  } else {
+    issues.push({
+      type: 'warning',
+      category: 'Rendimiento',
+      title: 'Compresión HTTP no detectada en servidor',
+      desc: 'Habilitar Gzip o Brotli acelera la velocidad de carga (FCP y LCP).'
     });
   }
 
