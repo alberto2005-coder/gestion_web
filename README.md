@@ -4,7 +4,7 @@
   <p><strong>Diagnóstico de Indexación, Simulador SERP, Core Web Vitals y Auditoría de Seguridad Web</strong></p>
 
   [![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
   [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
   <br>
@@ -168,6 +168,12 @@
 
 ---
 
+## 📄 Licencia
+
+Este proyecto está bajo la [Licencia GNU General Public License v3.0 (GPL-3.0)](LICENSE).
+
+---
+
 ## 💻 Getting Started
 
 1. **Clone the repository**:
@@ -193,4 +199,4 @@
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE).

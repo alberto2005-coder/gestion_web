@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Herramienta profesional de diagnóstico de indexación, simulación SERP y auditoría SEO en tiempo real",
   "main": "server.js",
+  "license": "GPL-3.0",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
